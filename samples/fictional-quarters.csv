@@ -1,0 +1,5 @@
+Tax Year,Basis,Quarter,Start,End,Cumulative Turnover GBP,Cumulative Bank GBP,Cumulative CIS GBP,Cumulative Recorded Expenses GBP,Cumulative Provisional Business Expenses GBP,HMRC Category Mapping
+2026,standard,1,2026-04-06,2026-07-05,950.00,760.00,190.00,100.00,50.00,PENDING
+2026,standard,2,2026-04-06,2026-10-05,1150.00,900.00,250.00,130.00,80.00,PENDING
+2026,standard,3,2026-04-06,2027-01-05,1250.00,980.00,270.00,130.00,80.00,PENDING
+2026,standard,4,2026-04-06,2027-04-05,1250.00,980.00,270.00,130.00,80.00,PENDING

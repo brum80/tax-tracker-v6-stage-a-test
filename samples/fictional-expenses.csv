@@ -1,0 +1,3 @@
+Record ID,Date,Supplier,Description,Original Category,Amount Paid GBP,Business Use Percent,Provisional Business Amount GBP,Quarterly HMRC Category,Filing Treatment
+demo-e1,2026-04-30,Example Telecom,Fictional work phone,Phone & internet,100.00,50,50.00,UNVERIFIED,PENDING
+demo-e2,2026-10-02,Example Tools,Fictional hammer,Tools,30.00,100,30.00,UNVERIFIED,PENDING

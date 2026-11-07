@@ -1,0 +1,4 @@
+Record ID,Date,Payment Type,Note,Site,Bank Receipt GBP,CIS Deducted GBP,Recognised Turnover GBP,CIS Rate
+demo-001,2026-04-10,normal,,Example Depot,760.00,190.00,950.00,20
+demo-002,2026-09-18,additional,Fictional bonus,,140.00,60.00,200.00,30
+demo-003,2026-12-18,additional,Fictional retention release,,80.00,20.00,100.00,20
