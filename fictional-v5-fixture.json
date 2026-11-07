@@ -1,0 +1,9 @@
+{
+  "version": 5,
+  "payments": [
+    {"id":"fictional-payment-001","date":"2026-04-10","type":"normal","net":608,"gross":800,"held":40,"cis":152,"siteId":"fictional-site-leeds","siteName":"Leeds","days":4,"nights":0,"adjust":0,"miles":160,"source":"FICTIONAL CONTRACTOR"},
+    {"id":"fictional-payment-002","date":"2026-04-17","type":"normal","net":380,"gross":500,"held":25,"cis":95,"siteId":"fictional-site-other","siteName":"Example Works","days":2,"nights":0,"adjust":0,"miles":100,"source":"FICTIONAL CONTRACTOR"}
+  ],
+  "expenses":[{"id":"fictional-expense-001","date":"2026-04-16","supplier":"Fictional Shop","description":"Fictional tool","amount":12,"category":"Tools"}],
+  "sites":[{"id":"fictional-site-leeds","name":"Leeds","miles":40,"away":false},{"id":"fictional-site-other","name":"Example Works","miles":50,"away":false}]
+}

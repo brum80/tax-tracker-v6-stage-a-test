@@ -1,0 +1,22 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const src=fs.readFileSync(__dirname+'/index.html','utf8').split('<script>')[1].split('</script>')[0];
+const validation=src.slice(src.indexOf('function validDateValue'),src.indexOf('let db, recoveryError'));
+const ctx={Date,Number,Set,Array,Error,console,Math};vm.createContext(ctx);vm.runInContext(validation,ctx);
+const v=ctx.validateDatabase,a=ctx.auditDatabase;
+const orig={version:5,payments:[{id:'p1',date:'2026-04-10',type:'normal',net:760,gross:1000,held:50,cis:190,miles:100,siteId:'s1'},{id:'p2',date:'2026-04-17',type:'normal',net:608,gross:800,held:40,cis:152,miles:100,siteId:'s1'}],expenses:[{id:'e1',date:'2026-05-01',supplier:'Example',description:'Tool',category:'Tools',amount:20}],sites:[{id:'s1',name:'Example site',miles:20,away:false}]};
+const clean=JSON.parse(JSON.stringify(orig));clean.version=6;clean.payments.push({id:'p3',date:'2026-11-01',type:'additional',note:'Test bonus',net:140,gross:200,held:0,cis:60,cisRate:30,miles:0,siteId:null});
+const clone=x=>JSON.parse(JSON.stringify(x));
+let count=0;function test(label,fn){fn();console.log('PASS '+label);count++}
+test('V5-compatible fixture accepted',()=>assert.equal(v(orig),true));
+test('V6-compatible fixture accepted',()=>assert.equal(v(clean),true));
+test('No financial warnings for clean backup',()=>assert.equal(a(clean).length,0));
+test('Invalid expense percent rejected',()=>{let x=clone(clean);x.expenses[0].businessUsePercent=150;assert.throws(()=>v(x))});
+test('Non-numeric expense percent rejected',()=>{let x=clone(clean);x.expenses[0].businessUsePercent='20';assert.throws(()=>v(x))});
+test('Missing site generates review warning',()=>{let x=clone(clean);x.sites=x.sites.filter(s=>s.id!==x.payments[0].siteId);v(x);assert(a(x).some(w=>w.includes('not in this backup')))});
+test('Inconsistent gross generates review warning',()=>{let x=clone(clean);x.payments[0].gross+=100;v(x);assert(a(x).some(w=>w.includes('contractual gross')))});
+test('Explicit rate discrepancy generates review warning',()=>{let x=clone(clean);x.payments[0].cisRate=30;v(x);assert(a(x).some(w=>w.includes('selected CIS rate')))});
+test('Legacy payment with no rate stays compatible',()=>assert.equal(v(orig),true));
+test('Duplicate id rejected',()=>{let x=clone(clean);x.payments[1].id=x.payments[0].id;assert.throws(()=>v(x))});
+test('Bad date rejected',()=>{let x=clone(clean);x.payments[0].date='2026-02-30';assert.throws(()=>v(x))});
+test('Unknown version rejected',()=>{let x=clone(clean);x.version=99;assert.throws(()=>v(x))});
+console.log(count+' data-safety checks passed');
